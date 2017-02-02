@@ -12,6 +12,12 @@ local Prefs =
 		Choices = { "Lv. 1", "Lv. 2", "Lv. 3", "Lv. 4", "All", "Lv. 5" },
 		Values = {1, 2, 3, 4, 5, 6}
 	},
+	Rental =
+	{
+		Default = 0,
+		Choices = {"Off", "Auto"},
+		Values = {0, -1}
+	},
 	JudgmentHeight = 
 	{
 		Default = "Standard",
@@ -31,6 +37,21 @@ local Prefs =
 		Values = { "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3" }
 	}
 }
+
+--This piece of code fills in the rest of the Rental values
+do
+	local MinimumRentalTime = 90 --1:30
+	local RentalIncrement = 30
+	local MaximumRentalTime = 630 --10:30
+	local Choices = Prefs.Rental.Choices
+	local Values = Prefs.Rental.Values
+	local PosCounter = 3
+	for i=MinimumRentalTime, MaximumRentalTime, RentalIncrement do
+		Choices[PosCounter] = SecondsToMMSS(i)
+		Values[PosCounter] = i
+		PosCounter = PosCounter+1
+	end
+end
 
 ThemePrefs.InitAll(Prefs)
 
